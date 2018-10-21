@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstdio>
+#include <cstdlib>
 #include <numeric>
 #include <ctime>
 #include <vector>
@@ -134,7 +135,9 @@ void generate_positions () {
 
 void detect_and_avoid_collisions () {
     usleep(10);
-    srand(time(NULL));
+    FILE *random = fopen("/dev/random", "r");
+    auto seed = (unsigned int)getc(random);
+    srand(seed);
     for (auto i = 1; i < 21; i++) {
         collision = false;
         if (i%2 == 0) {
